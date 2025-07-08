@@ -1,3 +1,4 @@
+import 'package:dicoding_project/pages/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -47,7 +48,13 @@ class StartScreen extends StatelessWidget {
                     height: 60,
                     margin: EdgeInsets.only(bottom: 60),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const MainScreen(),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0),
