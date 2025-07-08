@@ -1,4 +1,4 @@
-import 'package:dicoding_project/pages/main_screen.dart';
+import 'package:dicoding_project/pages/start_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'finalProjectDicoding',
       theme: ThemeData(),
-      home: const MainScreen(),
+      home: const StartScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

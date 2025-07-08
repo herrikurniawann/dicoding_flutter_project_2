@@ -57,7 +57,7 @@ class StartScreen extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                       child: Text(

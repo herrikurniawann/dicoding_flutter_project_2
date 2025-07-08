@@ -16,23 +16,12 @@ class _MainScreenState extends State<MainScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color(0xFF1e1e20),
         actions: <Widget>[
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.message_outlined,
-                  color: Colors.white,
-                  size: 25,
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.person_outline, color: Colors.white, size: 30),
-              ),
-            ],
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.person_outline, color: Colors.white, size: 30),
           ),
         ],
       ),
@@ -79,7 +68,14 @@ class _MainScreenState extends State<MainScreen> {
                           child: CheckboxListTile(
                             title: Text(
                               'Selesaikan Project Flutter',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: Colors.white,
+                                decoration:
+                                    _isTaskCompleted
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                decorationColor: Colors.white,
+                              ),
                             ),
                             checkColor: Colors.black,
                             activeColor: Colors.white,
@@ -99,6 +95,12 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        backgroundColor: Colors.white,
+        child: Icon(Icons.add_box_sharp),
       ),
     );
   }
