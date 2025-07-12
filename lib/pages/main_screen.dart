@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dicoding_project/model/data.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -9,7 +10,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  bool _isTaskCompleted = false;
+  final List<Task> _currentTasks = List.from(dummyTasks);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'July 7, 2025',
+                    _getFormattedDate(),
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontWeight: FontWeight.w100,
@@ -53,42 +54,51 @@ class _MainScreenState extends State<MainScreen> {
                       fontSize: 30,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 20),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 30),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(color: Colors.grey),
-                            ),
-                          ),
-                          child: CheckboxListTile(
-                            title: Text(
-                              'Selesaikan Project Flutter',
-                              style: TextStyle(
-                                color: Colors.white,
-                                decoration:
-                                    _isTaskCompleted
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
-                                decorationColor: Colors.white,
-                              ),
-                            ),
-                            checkColor: Colors.black,
-                            activeColor: Colors.white,
-                            value: _isTaskCompleted,
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                _isTaskCompleted = newValue!;
-                              });
-                            },
+                  SizedBox(height: 20),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: _currentTasks.length,
+                    itemBuilder: (context, index) {
+                      final task = _currentTasks[index];
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey.withValues(alpha: 5)),
                           ),
                         ),
-                      ],
-                    ),
+                        child: CheckboxListTile(
+                          title: Text(
+                            task.title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              decoration: task.isCompleted
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                              decorationColor: Colors.white,
+                            ),
+                          ),
+                          subtitle: task.description.isNotEmpty
+                              ? Text(
+                                  task.description,
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white70,
+                                    fontSize: 12,
+                                  ),
+                                )
+                              : null,
+                          checkColor: Colors.black,
+                          activeColor: Colors.white,
+                          value: task.isCompleted,
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              task.isCompleted = newValue!;
+                            });
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -97,11 +107,20 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {        },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         backgroundColor: Colors.white,
-        child: Icon(Icons.add_box_sharp),
+        child: Icon(Icons.add_box_sharp, color: Color(0xFF1e1e20)),
       ),
     );
+  }
+
+  String _getFormattedDate() {
+    final now = DateTime.now();
+    final List<String> months = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+    return '${months[now.month - 1]} ${now.day}, ${now.year}';
   }
 }
